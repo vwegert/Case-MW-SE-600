@@ -1,0 +1,6 @@
+# exclude some stuff introduced by the OS or the author's favorite editor
+**/.DS_Store
+**/*.sublime-workspace
+
+# do not track the generated dependency files since they contain the absolute local paths
+**/*.deps
