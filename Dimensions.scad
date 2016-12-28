@@ -22,19 +22,19 @@ PS_HEIGHT =  63.5;
  * The size and position of the terminals on the primary (mains) side.
  */
 PS_PRI_TERM_LENGTH   = 14;
-PS_PRI_TERM_WIDTH    = 3 * 10 + (10 - 8.2) / 2;
-PS_PRI_TERM_HEIGHT   = 19; // TODO validate this value
-PS_PRI_TERM_OFFSET_Y = 10; // TODO validate this value
-PS_PRI_TERM_OFFSET_Z = 10; // TODO validate this value
+PS_PRI_TERM_WIDTH    = 35; // theoretically: 3 * 10 + (10 - 8.2) / 2
+PS_PRI_TERM_HEIGHT   = 15; 
+PS_PRI_TERM_OFFSET_Y = 11.5; 
+PS_PRI_TERM_OFFSET_Z =  9.5; 
 
 /**
  * The size and position of the terminals on the secondary (output) side.
  */
 PS_SEC_TERM_LENGTH   = 17;
-PS_SEC_TERM_WIDTH    = 6 * 13 + (13 - 10) / 2;
-PS_SEC_TERM_HEIGHT   = 19; // TODO validate this value
-PS_SEC_TERM_OFFSET_Y = 25; // TODO validate this value
-PS_SEC_TERM_OFFSET_Z = 10; // TODO validate this value
+PS_SEC_TERM_WIDTH    = 82; // theoretically 6 * 13 + (13 - 10) / 2;
+PS_SEC_TERM_HEIGHT   = 19;
+PS_SEC_TERM_OFFSET_Y = 26; 
+PS_SEC_TERM_OFFSET_Z =  9; 
 
 /**
  * The size and position of the screw holes in the sides.
@@ -104,7 +104,7 @@ PRI_COVER_INNER_CLEARANCE = 45; // switch needs >= 37
 /**
  * The width of the compartment that holds the mains wiring and power connector / switch.
  */
-PRI_COVER_MAINS_COMP_WIDTH = 60; // TODO validate this value (check fan size)
+PRI_COVER_MAINS_COMP_WIDTH = 60; 
 
 /**
  * The thickness of the compartment separation wall.
