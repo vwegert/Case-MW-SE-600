@@ -109,15 +109,22 @@ PRI_COVER_MAINS_COMP_WIDTH = 60;
 /**
  * The thickness of the compartment separation wall.
  */
-PRI_COVER_MAINS_COMP_WALL_THICKNESS = 1.5;
+PRI_COVER_MAINS_COMP_WALL_THICKNESS = 2;
 
 /**
  * The dimensions of the cutout and the screw holes for the power connector.
  */
 PRI_COVER_PC_WIDTH  = 28;
 PRI_COVER_PC_HEIGHT = 47;
-PRI_COVER_PC_SCREW_HOLE_DIAMETER = 3.4;
+PRI_COVER_PC_SCREW_HOLE_DIAMETER = 2.5;
 PRI_COVER_PC_SCREW_HOLE_DISTANCE = 40;
+
+/**
+ * The dimensions of the support structures around the power connector mounting holes.
+ */
+PRI_COVER_PC_SUPPORT_LENGTH = 5;
+PRI_COVER_PC_SUPPORT_WIDTH  = 5;
+PRI_COVER_PC_SUPPORT_HEIGHT = 15;
 
 /**
  * The distance of the center support pillar from the face of the power supply.
@@ -125,7 +132,7 @@ PRI_COVER_PC_SCREW_HOLE_DISTANCE = 40;
 PRI_COVER_CENTER_SUPPORT_DISTANCE_PS = 2; // TODO validate this value
 
 /**
- * The outer dimensions of the primary-side cover.
+ * The outer dimensions of the primary cover.
  */
 PRI_COVER_LENGTH = PRI_COVER_CASE_LENGTH + PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS;
 PRI_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS;
@@ -136,6 +143,53 @@ PRI_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
  */
 PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS, -WALL_THICKNESS];
 PRI_LID_OFFSET = [-PRI_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
+
+// ===== SECONDARY (OUTPUT) SIDE ======================================================================================
+
+/**
+ * How much clearance to leave on the inside of the secondary cover.
+ */
+SEC_COVER_INNER_CLEARANCE = 90; // shunt needs ~50, PG connector ~30, and we need some clearance for mounting
+
+/**
+ * The outer dimensions of the secondary cover.
+ */
+SEC_COVER_LENGTH = SEC_COVER_CASE_LENGTH + SEC_COVER_INNER_CLEARANCE + WALL_THICKNESS;
+SEC_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS;
+SEC_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
+
+/** 
+ * The dimensions of the shunt used to measure the output current.
+ */
+SEC_SHUNT_WIDTH         = 120;
+SEC_SHUNT_LENGTH        =  25;
+SEC_SHUNT_HEIGHT        =  20;
+SEC_SHUNT_HOLE_DISTANCE = 101; 
+SEC_SHUNT_HOLE_DIAMETER =   6;
+
+/**
+ * The clearance of the shunt (that is mounted to the "roof" of the cover) on both sides.
+ */
+SEC_COVER_SHUNT_CLEARANCE_PS   = 20;
+SEC_COVER_SHUNT_CLEARANCE_WALL =  5;
+
+/**
+ * The dimensions of the blocks that the shunt is mounted on.
+ */
+SEC_COVER_SHUNT_BLOCK_LENGTH = SEC_SHUNT_LENGTH;
+SEC_COVER_SHUNT_BLOCK_WIDTH  = SEC_SHUNT_LENGTH;
+SEC_COVER_SHUNT_BLOCK_HEIGHT = 8;
+
+/**
+ * The distance of the shunt mounting blocks from the outer wall of the cover.
+ */
+SEC_COVER_SHUNT_BLOCK_Y_OFFSET = (SEC_COVER_WIDTH - (SEC_SHUNT_HOLE_DISTANCE + SEC_COVER_SHUNT_BLOCK_WIDTH)) / 2;
+
+/**
+ * The offset of the primary side cover and lid in relation to the case model.
+ */
+SEC_COVER_OFFSET = [PS_LENGTH - SEC_COVER_CASE_LENGTH, -WALL_THICKNESS, -WALL_THICKNESS];
+//SEC_LID_OFFSET = [-SEC_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
 
 // ===== AUXILIARY VALUES =============================================================================================
 

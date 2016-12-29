@@ -24,10 +24,10 @@ module _cp_power_connector_cutouts() {
 	// the screw holes
 	translate([-EPSILON, -PRI_COVER_PC_SCREW_HOLE_DISTANCE / 2, PRI_COVER_PC_HEIGHT / 2])
 		rotate([0, 90, 0])
-			cylinder(d = PRI_COVER_PC_SCREW_HOLE_DIAMETER, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
+			cylinder(d = PRI_COVER_PC_SCREW_HOLE_DIAMETER, h = PRI_COVER_PC_SUPPORT_LENGTH + WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
 	translate([-EPSILON, PRI_COVER_PC_SCREW_HOLE_DISTANCE / 2, PRI_COVER_PC_HEIGHT / 2])
 		rotate([0, 90, 0])
-			cylinder(d = PRI_COVER_PC_SCREW_HOLE_DIAMETER, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
+			cylinder(d = PRI_COVER_PC_SCREW_HOLE_DIAMETER, h = PRI_COVER_PC_SUPPORT_LENGTH + WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
 }		
 
 module _cp_vent_slots() {
@@ -70,17 +70,42 @@ module _cp_support_pillar() {
 	}
 }
 
+module _cp_pc_support() {
+	translate([0, PRI_COVER_PC_SUPPORT_WIDTH/2, -PRI_COVER_PC_SUPPORT_HEIGHT/2]) {
+		rotate([90, 0, 0])
+			linear_extrude(height = PRI_COVER_PC_SUPPORT_WIDTH)
+				polygon(points = [[0, 0],
+					              [0, PRI_COVER_PC_SUPPORT_HEIGHT],
+				    	          [PRI_COVER_PC_SUPPORT_LENGTH, PRI_COVER_PC_SUPPORT_HEIGHT/3*2],
+				        	      [PRI_COVER_PC_SUPPORT_LENGTH, PRI_COVER_PC_SUPPORT_HEIGHT/3]]);
+	}
+}
+
 module CoverPrimary() {
 	color("RoyalBlue")
 		union() {
 	
-			// create the basic shape using a difference of two cubes
 			difference() {
-				cube([PRI_COVER_LENGTH, PRI_COVER_WIDTH, PRI_COVER_HEIGHT]);
-				translate([WALL_THICKNESS, WALL_THICKNESS, -EPSILON])
-					cube([PRI_COVER_LENGTH - WALL_THICKNESS + EPSILON,
-						  PS_WIDTH,
-						  PS_HEIGHT + WALL_THICKNESS + EPSILON]);
+				union() {
+					// create the basic shape using a difference of two cubes
+					difference() {
+						cube([PRI_COVER_LENGTH, PRI_COVER_WIDTH, PRI_COVER_HEIGHT]);
+						translate([WALL_THICKNESS, WALL_THICKNESS, -EPSILON])
+							cube([PRI_COVER_LENGTH - WALL_THICKNESS + EPSILON,
+								  PS_WIDTH,
+								  PS_HEIGHT + WALL_THICKNESS + EPSILON]);
+					}
+
+					// add the supports for the power connector screws
+					translate([WALL_THICKNESS, 
+						       WALL_THICKNESS + COVER_SUPPORT_PILLAR_SIZE + (PRI_COVER_MAINS_COMP_WIDTH - COVER_SUPPORT_PILLAR_SIZE) / 2 - PRI_COVER_PC_SCREW_HOLE_DISTANCE / 2, 
+						       PRI_COVER_HEIGHT / 2])
+						_cp_pc_support();
+					translate([WALL_THICKNESS, 
+						       WALL_THICKNESS + COVER_SUPPORT_PILLAR_SIZE + (PRI_COVER_MAINS_COMP_WIDTH - COVER_SUPPORT_PILLAR_SIZE) / 2 + PRI_COVER_PC_SCREW_HOLE_DISTANCE / 2, 
+						       PRI_COVER_HEIGHT / 2])
+						_cp_pc_support();
+				}
 
 				// minus the screw holes
 				translate([PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS + PS_PRI_SCREW_OFFSET, 0, WALL_THICKNESS + PS_LOWER_SCREW_HEIGHT]) {
@@ -123,6 +148,6 @@ module CoverPrimary() {
 }
 
 // optimize for print
-translate([PRI_COVER_LENGTH, 0, PRI_COVER_HEIGHT])
-	rotate([0, 180, 0])
+//translate([PRI_COVER_LENGTH, 0, PRI_COVER_HEIGHT])
+//	rotate([0, 180, 0])
 		CoverPrimary();
