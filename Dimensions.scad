@@ -70,7 +70,7 @@ SEC_COVER_CASE_LENGTH = 2 * PS_SEC_SCREW_OFFSET;
  */
 COVER_SUPPORT_PILLAR_SIZE = 9;
 COVER_SUPPORT_PILLAR_HOLE_DIAMETER = 3.3; // to cut a M4 thread
-COVER_SUPPORT_PILLAR_HOLE_DEPTH = 30;
+COVER_SUPPORT_PILLAR_HOLE_DEPTH = 50;
 
 /**
  * The size of the holes in the lid for the screws that fit into the support pillars.
@@ -99,7 +99,7 @@ FOOT_EDGE_DISTANCE_Y = 15;
 /**
  * How much clearance to leave on the inside of the primary cover.
  */
-PRI_COVER_INNER_CLEARANCE = 45; // switch needs >= 37
+PRI_COVER_INNER_CLEARANCE = 65; // switch needs >= 37, add the terminal >= 14 and some room for cables
 
 /**
  * The width of the compartment that holds the mains wiring and power connector / switch.
