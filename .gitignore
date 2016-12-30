@@ -4,3 +4,6 @@
 
 # do not track the generated dependency files since they contain the absolute local paths
 **/*.deps
+
+# do not add the compiled STL files to the github repository
+**/*.stl
