@@ -115,7 +115,7 @@ PRI_COVER_MAINS_COMP_WALL_THICKNESS = 2;
  * The dimensions of the cutout and the screw holes for the power connector.
  */
 PRI_COVER_PC_WIDTH  = 28;
-PRI_COVER_PC_HEIGHT = 47;
+PRI_COVER_PC_HEIGHT = 48;
 PRI_COVER_PC_SCREW_HOLE_DIAMETER = 2.5;
 PRI_COVER_PC_SCREW_HOLE_DISTANCE = 40;
 
