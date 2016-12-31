@@ -90,9 +90,9 @@ module CoverPrimary() {
 					// create the basic shape using a difference of two cubes
 					difference() {
 						cube([PRI_COVER_LENGTH, PRI_COVER_WIDTH, PRI_COVER_HEIGHT]);
-						translate([WALL_THICKNESS, WALL_THICKNESS, -EPSILON])
+						translate([WALL_THICKNESS, WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION/2, -EPSILON])
 							cube([PRI_COVER_LENGTH - WALL_THICKNESS + EPSILON,
-								  PS_WIDTH,
+								  PS_WIDTH + COVER_INNER_WIDTH_CORRECTION,
 								  PS_HEIGHT + WALL_THICKNESS + EPSILON]);
 					}
 
@@ -134,7 +134,7 @@ module CoverPrimary() {
 			// add the outer support pillars 
 			translate([WALL_THICKNESS, WALL_THICKNESS, 0])
 				_cp_support_pillar();
-			translate([WALL_THICKNESS, WALL_THICKNESS + PS_WIDTH - COVER_SUPPORT_PILLAR_SIZE, 0])
+			translate([WALL_THICKNESS, PRI_COVER_WIDTH - WALL_THICKNESS - COVER_SUPPORT_PILLAR_SIZE, 0])
 				_cp_support_pillar(); 
 
 			// add the center support pillar and the compartment separation wall
