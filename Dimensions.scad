@@ -87,9 +87,9 @@ COVER_VENT_SPACING = 4;
 /**
  * The size and positions of the feet on the underside of the lids.
  */
-FOOT_OUTER_DIAMETER  = 15;
-FOOT_INNER_DIAMETER  = 13;
-FOOT_HEIGHT          =  5;
+FOOT_OUTER_DIAMETER  = 12;
+FOOT_INNER_DIAMETER  = 10;
+FOOT_HEIGHT          =  4;
 FOOT_RECESS_DEPTH    =  1;
 FOOT_EDGE_DISTANCE_X = 12;
 FOOT_EDGE_DISTANCE_Y = 15;
