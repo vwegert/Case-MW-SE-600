@@ -55,6 +55,12 @@ PS_SEC_SCREW_OFFSET   = PS_LENGTH - PS_PRI_SCREW_OFFSET - PS_SCREW_DISTANCE_X;
 WALL_THICKNESS = 3;
 
 /**
+ * The additional clearance added to the inner width of the covers to account for printing inaccuracies.
+ */
+COVER_INNER_WIDTH_CORRECTION = 1.0;
+LID_WIDTH_CORRECTION = 0.0;
+
+/**
  * The size of the screw holes used to mount the covers to the power supply.
  */
 COVER_PS_SCREW_DIAMETER = 3.4;
@@ -135,13 +141,16 @@ PRI_COVER_CENTER_SUPPORT_DISTANCE_PS = 2; // TODO validate this value
  * The outer dimensions of the primary cover.
  */
 PRI_COVER_LENGTH = PRI_COVER_CASE_LENGTH + PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS;
-PRI_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS;
+PRI_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION;
 PRI_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
+
+PRI_LID_LENGTH   = PRI_COVER_LENGTH - WALL_THICKNESS;
+PRI_LID_WIDTH    = PS_WIDTH + LID_WIDTH_CORRECTION;
 
 /**
  * The offset of the primary side cover and lid in relation to the case model.
  */
-PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS, -WALL_THICKNESS];
+PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION, -WALL_THICKNESS];
 PRI_LID_OFFSET = [-PRI_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
 
 // ===== SECONDARY (OUTPUT) SIDE ======================================================================================
