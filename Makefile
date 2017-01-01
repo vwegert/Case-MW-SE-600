@@ -19,7 +19,8 @@ OPENSCAD = /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 #
 all: CoverPrimary.stl   \
 	 LidPrimary.stl     \
-	 CoverSecondary.stl 
+	 CoverSecondary.stl \
+	 LidSecondary.stl
 
 clean:
 	$(RM) *.deps

@@ -213,6 +213,9 @@ SEC_COVER_LENGTH = SEC_COVER_CASE_LENGTH + SEC_COVER_INNER_CLEARANCE + WALL_THIC
 SEC_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION;
 SEC_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
 
+SEC_LID_LENGTH   = SEC_COVER_LENGTH - WALL_THICKNESS;
+SEC_LID_WIDTH    = PS_WIDTH + LID_WIDTH_CORRECTION;
+
 /**
  * The distance of the shunt mounting blocks from the outer wall of the cover.
  */
@@ -247,7 +250,7 @@ SEC_COVER_VENT_SPACING     = 4;
  * The offset of the primary side cover and lid in relation to the case model.
  */
 SEC_COVER_OFFSET = [PS_LENGTH - SEC_COVER_CASE_LENGTH, -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION/2, -WALL_THICKNESS];
-//SEC_LID_OFFSET = [-SEC_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
+SEC_LID_OFFSET = [PS_LENGTH - SEC_COVER_CASE_LENGTH, 0, -WALL_THICKNESS];
 
 // ===== AUXILIARY VALUES =============================================================================================
 

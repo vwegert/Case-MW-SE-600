@@ -11,9 +11,8 @@ include <Common.scad>
 
 module _lp_screw_hole() {
 	translate([0, 0, -EPSILON])
-			cylinder(d = LID_PILLAR_SCREW_DIAMETER, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
+		cylinder(d = LID_PILLAR_SCREW_DIAMETER, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
 }
-
 
 module LidPrimary() {
 	color("DodgerBlue")
