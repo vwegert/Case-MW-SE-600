@@ -79,16 +79,14 @@ COVER_SUPPORT_PILLAR_HOLE_DIAMETER = 3.3; // to cut a M4 thread
 COVER_SUPPORT_PILLAR_HOLE_DEPTH = 50;
 
 /**
+ * The distance of the inner support pillars from the face of the power supply.
+ */
+COVER_INNER_SUPPORT_PILLAR_DISTANCE_PS = 2; 
+
+/**
  * The size of the holes in the lid for the screws that fit into the support pillars.
  */
 LID_PILLAR_SCREW_DIAMETER = 4;
-
-/**
- * The width and height of the ventilation slots.
- */
-COVER_VENT_WIDTH   = 2.5;
-COVER_VENT_HEIGHT  = PS_HEIGHT * 2 / 3;
-COVER_VENT_SPACING = 4;
 
 /**
  * The size and positions of the feet on the underside of the lids.
@@ -133,11 +131,6 @@ PRI_COVER_PC_SUPPORT_WIDTH  = 5;
 PRI_COVER_PC_SUPPORT_HEIGHT = 15;
 
 /**
- * The distance of the center support pillar from the face of the power supply.
- */
-PRI_COVER_CENTER_SUPPORT_DISTANCE_PS = 2; // TODO validate this value
-
-/**
  * The outer dimensions of the primary cover.
  */
 PRI_COVER_LENGTH = PRI_COVER_CASE_LENGTH + PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS;
@@ -148,24 +141,19 @@ PRI_LID_LENGTH   = PRI_COVER_LENGTH - WALL_THICKNESS;
 PRI_LID_WIDTH    = PS_WIDTH + LID_WIDTH_CORRECTION;
 
 /**
+ * The width and height of the ventilation slots.
+ */
+PRI_COVER_VENT_WIDTH   = 2.5;
+PRI_COVER_VENT_HEIGHT  = PS_HEIGHT * 2 / 3;
+PRI_COVER_VENT_SPACING = 4;
+
+/**
  * The offset of the primary side cover and lid in relation to the case model.
  */
-PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION, -WALL_THICKNESS];
+PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION/2, -WALL_THICKNESS];
 PRI_LID_OFFSET = [-PRI_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
 
 // ===== SECONDARY (OUTPUT) SIDE ======================================================================================
-
-/**
- * How much clearance to leave on the inside of the secondary cover.
- */
-SEC_COVER_INNER_CLEARANCE = 90; // shunt needs ~50, PG connector ~30, and we need some clearance for mounting
-
-/**
- * The outer dimensions of the secondary cover.
- */
-SEC_COVER_LENGTH = SEC_COVER_CASE_LENGTH + SEC_COVER_INNER_CLEARANCE + WALL_THICKNESS;
-SEC_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS;
-SEC_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
 
 /** 
  * The dimensions of the shunt used to measure the output current.
@@ -177,17 +165,53 @@ SEC_SHUNT_HOLE_DISTANCE = 101;
 SEC_SHUNT_HOLE_DIAMETER =   6;
 
 /**
- * The clearance of the shunt (that is mounted to the "roof" of the cover) on both sides.
+ * The clearance of the shunt (that is mounted in parallel to the back side of the power supply) on the sides.
  */
-SEC_COVER_SHUNT_CLEARANCE_PS   = 20;
-SEC_COVER_SHUNT_CLEARANCE_WALL =  5;
+SEC_COVER_SHUNT_CLEARANCE_PS   = 40;
+SEC_COVER_SHUNT_CLEARANCE_TOP  = 2;
 
 /**
  * The dimensions of the blocks that the shunt is mounted on.
  */
-SEC_COVER_SHUNT_BLOCK_LENGTH = SEC_SHUNT_LENGTH;
-SEC_COVER_SHUNT_BLOCK_WIDTH  = SEC_SHUNT_LENGTH;
-SEC_COVER_SHUNT_BLOCK_HEIGHT = 8;
+SEC_COVER_SHUNT_BLOCK_LENGTH = 10;
+SEC_COVER_SHUNT_BLOCK_WIDTH  = 30;
+SEC_COVER_SHUNT_BLOCK_HEIGHT = SEC_SHUNT_LENGTH + SEC_COVER_SHUNT_CLEARANCE_TOP;
+SEC_COVER_SHUNT_BLOCK_HOLE_DIAMETER = SEC_SHUNT_HOLE_DIAMETER;
+
+/**
+ * The dimensions of the voltage/current display unit.
+ */
+SEC_DISPLAY_LENGTH = 25;
+SEC_DISPLAY_WIDTH  = 45;
+SEC_DISPLAY_HEIGHT = 26;
+
+/**
+ * The dimensions to use for the PG16 cable gland.
+ */
+SEC_GLAND_HOLE_DIAMETER    = 22.25; // actually 22, but add some clearance
+SEC_GLAND_INNER_NUT_LENGTH = 30;
+SEC_GLAND_INNER_NUT_HEIGHT = 33;
+SEC_GLAND_MOUNTING_DEPTH   = 10;
+SEC_GLAND_OUTER_LENGTH     = 30; // approx
+
+/**
+ * Which side to mount the gland on.
+ */
+SEC_GLAND_LEFT = false;
+
+/**
+ * How much clearance to leave on the inside of the secondary cover.
+ */
+SEC_COVER_INNER_CLEARANCE = SEC_COVER_SHUNT_CLEARANCE_PS + 
+                            SEC_COVER_SHUNT_BLOCK_LENGTH + 
+                            max(SEC_GLAND_MOUNTING_DEPTH, SEC_DISPLAY_LENGTH);
+
+/**
+ * The outer dimensions of the secondary cover.
+ */
+SEC_COVER_LENGTH = SEC_COVER_CASE_LENGTH + SEC_COVER_INNER_CLEARANCE + WALL_THICKNESS;
+SEC_COVER_WIDTH  = PS_WIDTH + 2 * WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION;
+SEC_COVER_HEIGHT = PS_HEIGHT + 2 * WALL_THICKNESS;
 
 /**
  * The distance of the shunt mounting blocks from the outer wall of the cover.
@@ -195,9 +219,34 @@ SEC_COVER_SHUNT_BLOCK_HEIGHT = 8;
 SEC_COVER_SHUNT_BLOCK_Y_OFFSET = (SEC_COVER_WIDTH - (SEC_SHUNT_HOLE_DISTANCE + SEC_COVER_SHUNT_BLOCK_WIDTH)) / 2;
 
 /**
+ * The space around the components on the outer secondary side.
+ */
+SEC_COMPONENT_SPACING = ( SEC_COVER_WIDTH - (SEC_DISPLAY_WIDTH + SEC_GLAND_HOLE_DIAMETER) ) / 3;
+
+/**
+ * The horizontal positions of the components on the outer secondary side.
+ */
+SEC_DISPLAY_Y = SEC_GLAND_LEFT ? 2 * SEC_COMPONENT_SPACING + SEC_GLAND_HOLE_DIAMETER : SEC_COMPONENT_SPACING;
+SEC_GLAND_Y   = ( SEC_GLAND_LEFT ? SEC_COMPONENT_SPACING : 2 * SEC_COMPONENT_SPACING + SEC_DISPLAY_WIDTH ) + SEC_GLAND_HOLE_DIAMETER/2;
+
+/**
+ * The vertical positions of the components on the outer secondary side.
+ */
+SEC_DISPLAY_Z = ( SEC_COVER_HEIGHT - SEC_DISPLAY_HEIGHT ) / 2;
+SEC_GLAND_Z   = SEC_COVER_HEIGHT / 2;
+
+/**
+ * The width and height of the ventilation slots.
+ */
+SEC_COVER_VENT_WIDTH       = 2.5;
+SEC_COVER_VENT_Y_CLEARANCE = 5;
+SEC_COVER_VENT_HEIGHT      = PS_HEIGHT - SEC_COVER_SHUNT_BLOCK_HEIGHT - 2 * SEC_COVER_VENT_Y_CLEARANCE;
+SEC_COVER_VENT_SPACING     = 4;
+
+/**
  * The offset of the primary side cover and lid in relation to the case model.
  */
-SEC_COVER_OFFSET = [PS_LENGTH - SEC_COVER_CASE_LENGTH, -WALL_THICKNESS, -WALL_THICKNESS];
+SEC_COVER_OFFSET = [PS_LENGTH - SEC_COVER_CASE_LENGTH, -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION/2, -WALL_THICKNESS];
 //SEC_LID_OFFSET = [-SEC_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
 
 // ===== AUXILIARY VALUES =============================================================================================

@@ -31,42 +31,31 @@ module _cp_power_connector_cutouts() {
 }		
 
 module _cp_vent_slots() {
-	// The total with of n slots is n * COVER_VENT_WIDTH + (n+1) * COVER_VENT_SPACING.
+	// The total width of n slots is n * PRI_COVER_VENT_WIDTH + (n+1) * PRI_COVER_VENT_SPACING.
 	// The width available is whatever we're left with after the mains compartment was separated.
 	_width_available = PS_WIDTH - PRI_COVER_MAINS_COMP_WIDTH - COVER_SUPPORT_PILLAR_SIZE;
-	//     _width_available = n * COVER_VENT_WIDTH + (n+1) * COVER_VENT_SPACING
-	// <=> _width_available = n * (COVER_VENT_WIDTH + COVER_VENT_SPACING) + COVER_VENT_SPACING
-	// <=> _width_available - COVER_VENT_SPACING = n * (COVER_VENT_WIDTH + COVER_VENT_SPACING)
-	// <=> n = (_width_available - COVER_VENT_SPACING) / (COVER_VENT_WIDTH + COVER_VENT_SPACING)
+	//     _width_available = n * PRI_COVER_VENT_WIDTH + (n+1) * PRI_COVER_VENT_SPACING
+	// <=> _width_available = n * (PRI_COVER_VENT_WIDTH + PRI_COVER_VENT_SPACING) + PRI_COVER_VENT_SPACING
+	// <=> _width_available - PRI_COVER_VENT_SPACING = n * (PRI_COVER_VENT_WIDTH + PRI_COVER_VENT_SPACING)
+	// <=> n = (_width_available - PRI_COVER_VENT_SPACING) / (PRI_COVER_VENT_WIDTH + PRI_COVER_VENT_SPACING)
 	// This will never be a natural number, so round off:
-	_num_slots = floor((_width_available - COVER_VENT_SPACING) / (COVER_VENT_WIDTH + COVER_VENT_SPACING));
+	_num_slots = floor((_width_available - PRI_COVER_VENT_SPACING) / (PRI_COVER_VENT_WIDTH + PRI_COVER_VENT_SPACING));
 
 	// the top and bottom center positions	
-	_slot_lower_z = COVER_VENT_WIDTH / 2;
-	_slot_upper_z = COVER_VENT_HEIGHT - COVER_VENT_WIDTH / 2;
+	_slot_lower_z = PRI_COVER_VENT_WIDTH / 2;
+	_slot_upper_z = PRI_COVER_VENT_HEIGHT - PRI_COVER_VENT_WIDTH / 2;
 
 	// render the slots
 	for(_slot = [0 : _num_slots - 1]) {
-		_slot_center_y = COVER_VENT_SPACING + _slot * (COVER_VENT_WIDTH + COVER_VENT_SPACING) + COVER_VENT_WIDTH / 2;
+		_slot_center_y = PRI_COVER_VENT_SPACING + _slot * (PRI_COVER_VENT_WIDTH + PRI_COVER_VENT_SPACING) + PRI_COVER_VENT_WIDTH / 2;
 		hull() {
 			translate([-EPSILON, _slot_center_y, _slot_lower_z])
 				rotate([0, 90, 0])
-					cylinder(d = COVER_VENT_WIDTH, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
+					cylinder(d = PRI_COVER_VENT_WIDTH, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
 			translate([-EPSILON, _slot_center_y, _slot_upper_z])
 				rotate([0, 90, 0])
-					cylinder(d = COVER_VENT_WIDTH, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
+					cylinder(d = PRI_COVER_VENT_WIDTH, h = WALL_THICKNESS + 2 * EPSILON, $fn = HOLE_RESOLUTION);
 		}
-	}
-}
-
-module _cp_support_pillar() {
-	difference() {
-		// the pillar
-		translate([0, 0, WALL_THICKNESS])
-			cube([COVER_SUPPORT_PILLAR_SIZE, COVER_SUPPORT_PILLAR_SIZE, PS_HEIGHT]);
-		// minus the hole for the screws
-		translate([COVER_SUPPORT_PILLAR_SIZE / 2, COVER_SUPPORT_PILLAR_SIZE / 2, WALL_THICKNESS - EPSILON])
-			cylinder(d = COVER_SUPPORT_PILLAR_HOLE_DIAMETER, h = COVER_SUPPORT_PILLAR_HOLE_DEPTH + EPSILON, $fn = HOLE_RESOLUTION);
 	}
 }
 
@@ -90,7 +79,7 @@ module CoverPrimary() {
 					// create the basic shape using a difference of two cubes
 					difference() {
 						cube([PRI_COVER_LENGTH, PRI_COVER_WIDTH, PRI_COVER_HEIGHT]);
-						translate([WALL_THICKNESS, WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION/2, -EPSILON])
+						translate([WALL_THICKNESS, WALL_THICKNESS, -EPSILON])
 							cube([PRI_COVER_LENGTH - WALL_THICKNESS + EPSILON,
 								  PS_WIDTH + COVER_INNER_WIDTH_CORRECTION,
 								  PS_HEIGHT + WALL_THICKNESS + EPSILON]);
@@ -126,28 +115,25 @@ module CoverPrimary() {
 				// minus the vent slots
 				translate([0, 
 					 	   WALL_THICKNESS + PRI_COVER_MAINS_COMP_WIDTH + PRI_COVER_MAINS_COMP_WALL_THICKNESS, 
-					       (PRI_COVER_HEIGHT - COVER_VENT_HEIGHT) / 2])
+					       (PRI_COVER_HEIGHT - PRI_COVER_VENT_HEIGHT) / 2])
 					_cp_vent_slots();
 
 			}
 
 			// add the outer support pillars 
-			translate([WALL_THICKNESS, WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION/2, 0])
-				_cp_support_pillar();
-			translate([WALL_THICKNESS, PRI_COVER_WIDTH - WALL_THICKNESS - COVER_SUPPORT_PILLAR_SIZE + COVER_INNER_WIDTH_CORRECTION/2, 0])
-				_cp_support_pillar(); 
+			translate([WALL_THICKNESS, WALL_THICKNESS, 0])
+				SupportPillar();
+			translate([WALL_THICKNESS, PRI_COVER_WIDTH - WALL_THICKNESS - COVER_SUPPORT_PILLAR_SIZE, 0])
+				SupportPillar(); 
 
 			// add the center support pillar and the compartment separation wall
-			translate([WALL_THICKNESS + PRI_COVER_INNER_CLEARANCE - COVER_SUPPORT_PILLAR_SIZE - PRI_COVER_CENTER_SUPPORT_DISTANCE_PS,
+			translate([WALL_THICKNESS + PRI_COVER_INNER_CLEARANCE - COVER_SUPPORT_PILLAR_SIZE - COVER_INNER_SUPPORT_PILLAR_DISTANCE_PS,
 				       WALL_THICKNESS + PRI_COVER_MAINS_COMP_WIDTH - COVER_SUPPORT_PILLAR_SIZE + PRI_COVER_MAINS_COMP_WALL_THICKNESS, 0])
-				_cp_support_pillar(); 
+				SupportPillar(); 
 			translate([WALL_THICKNESS, WALL_THICKNESS + PRI_COVER_MAINS_COMP_WIDTH, WALL_THICKNESS])
 				cube([PRI_COVER_INNER_CLEARANCE - COVER_SUPPORT_PILLAR_SIZE, PRI_COVER_MAINS_COMP_WALL_THICKNESS, PS_HEIGHT]);
 		}
 
 }
 
-// optimize for print
-//translate([PRI_COVER_LENGTH, 0, PRI_COVER_HEIGHT])
-//	rotate([0, 180, 0])
-		CoverPrimary();
+CoverPrimary();
