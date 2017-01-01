@@ -141,6 +141,14 @@ PRI_LID_LENGTH   = PRI_COVER_LENGTH - WALL_THICKNESS;
 PRI_LID_WIDTH    = PS_WIDTH + LID_WIDTH_CORRECTION;
 
 /**
+ * The offset of the primary side cover and lid in relation to the case model.
+ */
+PRI_COVER_OFFSET = [-(PRI_COVER_INNER_CLEARANCE + WALL_THICKNESS), -WALL_THICKNESS - COVER_INNER_WIDTH_CORRECTION, -WALL_THICKNESS];
+PRI_LID_OFFSET = [-PRI_COVER_INNER_CLEARANCE, 0, -WALL_THICKNESS];
+
+// ===== SECONDARY (OUTPUT) SIDE ======================================================================================
+
+/**
  * The width and height of the ventilation slots.
  */
 PRI_COVER_VENT_WIDTH   = 2.5;

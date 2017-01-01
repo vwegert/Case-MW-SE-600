@@ -79,7 +79,7 @@ module CoverPrimary() {
 					// create the basic shape using a difference of two cubes
 					difference() {
 						cube([PRI_COVER_LENGTH, PRI_COVER_WIDTH, PRI_COVER_HEIGHT]);
-						translate([WALL_THICKNESS, WALL_THICKNESS, -EPSILON])
+						translate([WALL_THICKNESS, WALL_THICKNESS + COVER_INNER_WIDTH_CORRECTION/2, -EPSILON])
 							cube([PRI_COVER_LENGTH - WALL_THICKNESS + EPSILON,
 								  PS_WIDTH + COVER_INNER_WIDTH_CORRECTION,
 								  PS_HEIGHT + WALL_THICKNESS + EPSILON]);
